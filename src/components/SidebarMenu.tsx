@@ -1,5 +1,6 @@
-import { IconButton, Avatar, Box, CloseButton, Flex, HStack, VStack, Icon, useColorModeValue, Text, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Image } from '@chakra-ui/react'
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiBell, FiChevronDown } from 'react-icons/fi'
+import{Outlet} from 'react-router-dom';
+import { IconButton, Avatar, Box, Flex, HStack, VStack, Icon, useColorModeValue, Text, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Image } from '@chakra-ui/react'
+import { FiHome, FiSettings, FiMenu, FiBell, FiChevronDown } from 'react-icons/fi'
 import { PiCallBell, PiUsersThreeLight, PiCaretLeftBold, PiShoppingBagLight} from 'react-icons/pi'
 import { MdRestaurantMenu } from 'react-icons/md';
 import { IconType } from 'react-icons'
@@ -164,7 +165,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     )
 }
 
-const AdminDashboard = () => {
+const SidebarMenu = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -184,10 +185,10 @@ const AdminDashboard = () => {
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
             <Box ml={{ base: 0, md: 60 }} p="4">
-                {/* Content */}
+                <Outlet/>
             </Box>
         </Box>
     )
 }
 
-export default AdminDashboard
+export default SidebarMenu
