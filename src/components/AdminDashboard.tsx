@@ -1,5 +1,7 @@
-import { IconButton, Avatar, Box, CloseButton, Flex, HStack, VStack, Icon, useColorModeValue, Text, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps, Menu, MenuButton, MenuDivider, MenuItem, MenuList} from '@chakra-ui/react'
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiBell, FiChevronDown} from 'react-icons/fi'
+import { IconButton, Avatar, Box, CloseButton, Flex, HStack, VStack, Icon, useColorModeValue, Text, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Image } from '@chakra-ui/react'
+import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiBell, FiChevronDown } from 'react-icons/fi'
+import { PiCallBell, PiUsersThreeLight, PiCaretLeftBold, PiShoppingBagLight} from 'react-icons/pi'
+import { MdRestaurantMenu } from 'react-icons/md';
 import { IconType } from 'react-icons'
 
 interface LinkItemProps {
@@ -22,9 +24,10 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome },
-    { name: 'Trending', icon: FiTrendingUp },
-    { name: 'Explore', icon: FiCompass },
-    { name: 'Favourites', icon: FiStar },
+    { name: 'Menu', icon: MdRestaurantMenu },
+    { name: 'Orders', icon: PiShoppingBagLight },
+    { name: 'Reservations', icon: PiCallBell },
+    { name: 'Customers', icon: PiUsersThreeLight },
     { name: 'Settings', icon: FiSettings },
 ]
 
@@ -39,11 +42,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
-                </Text>
-                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+            <HStack justifyContent={'flex-end'}  display={{ base: 'flex', md: 'none' }} p="10px">
+
+                <PiCaretLeftBold onClick={onClose} />
+            </HStack>
+            <Flex h="20" alignItems="center" m="5" justifyContent="center">
+                <Image src='../img/logo.jpg' boxSize='120px' objectFit='cover'></Image>
             </Flex>
             {LinkItems.map((link) => (
                 <NavItem key={link.name} icon={link.icon}>
