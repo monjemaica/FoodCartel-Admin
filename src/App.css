@@ -1,0 +1,55 @@
+:root {
+    --light: 255, 255, 255;
+    --dark: 0, 0, 0;
+    --greenRGB: 4, 106, 56;
+    --light-greenRGB: 144, 238, 144;
+    --white: #ffffff;
+    --dirty-white: #f0faff;
+    --green: #046a38;
+    --black: #1a1a1a;
+    --grey: #9a9a9a;
+    --light-grey: #cccccc;
+  
+    --orange: #FFC000;
+    --lightgreen: #159c5b;
+    --skyblue: #87CEEB;
+    --lightblue: #87CEFA;
+    --pink: #FF69B4;
+    --lightsalmon: #FFA07A;
+    --red: 	#DC143C;
+  
+    --header: url(../img/food2.jpg);
+    --two: url(../img/food1.jpg);
+    --img-signup: url("../img/header.jpg");
+  }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: var(--dirty-white);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
+
+::selection {
+  background-color: var(--green);
+  color: var(--white);
+}
