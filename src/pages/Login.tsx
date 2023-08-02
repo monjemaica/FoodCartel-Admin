@@ -4,14 +4,15 @@ import { Button, Flex, Text, FormControl, FormLabel, Heading, Input, Stack, Imag
 import { AtSignIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import authService from '../service/authService'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 
-interface Props{
-  cookieAuth: (e: any) => any
-  getUserData: (e: any) => any
-}
+// interface Props{
+//   cookieAuth: (e: any) => any
+//   getUserData: (e: any) => any
+// }
 
-export const Login = ({cookieAuth, getUserData}:Props) => {
+export const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [admin, setAdmin] = useState({
     email: '',
@@ -22,12 +23,11 @@ export const Login = ({cookieAuth, getUserData}:Props) => {
   const navigate = useNavigate();
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
+    setAdmin(admin)
 
     authService.create(admin).then((res) => {
-      setAdmin(admin)
-      cookieAuth(res.data.data.authentication.sessionToken)
-      getUserData(res.data.data)
       localStorage.setItem('USERDATA', JSON.stringify(res.data.data));
+      Cookies.set('COOKI3-AUTH', res.data.data.authentication.sessionToken, { expires: 7 });
       navigate("/");
     })
     .catch(err => setError(err.response.data));

@@ -5,9 +5,11 @@ import { Home } from './pages/Home';
 import { Orders } from './pages/Orders';
 import { Reservations } from './pages/Reservations';
 import { Login } from './pages/Login';
-import { PrivateRoute } from './utils/PrivateRoute';
+import { PrivateRoute } from './hooks/PrivateRoute';
+import { useState } from 'react';
 
 function App() {
+
 
   return (
     <>
@@ -22,7 +24,7 @@ function App() {
         </Route>
 
         <Route path="/login" element={<Login />} />
-        <Route path='*' element={<SidebarMenu />} />
+        <Route path='*' element={<Login />} />
       </Routes>
     </>
   )

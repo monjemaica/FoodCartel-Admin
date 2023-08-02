@@ -23,4 +23,5 @@ export interface User{
     isDeleted: Boolean
 }
 
+
 export default create('/auth/login')
