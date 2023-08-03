@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css'
 import SidebarMenu from './components/SidebarMenu'
@@ -6,15 +7,14 @@ import { Orders } from './pages/Orders';
 import { Reservations } from './pages/Reservations';
 import { Login } from './pages/Login';
 import { PrivateRoute } from './hooks/PrivateRoute';
-import { useState } from 'react';
 
 function App() {
-
-
+  
   return (
     <>
 
       <Routes>
+        {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}
         <Route element={<PrivateRoute />}>
           <Route element={<SidebarMenu />}>
             <Route path="/" element={<Home />} />
@@ -29,5 +29,4 @@ function App() {
     </>
   )
 }
-
-export default App
+export default App;

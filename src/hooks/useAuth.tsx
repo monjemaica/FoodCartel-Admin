@@ -1,5 +1,5 @@
-import { ReactNode, createContext, useContext, useMemo } from 'react';
-import { useCookies } from 'react-cookie';
+import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom';
 import authService from '../service/authService';
 
@@ -17,30 +17,23 @@ interface UserAdmin {
     children: ReactNode
 }
 
-interface Cookies{
-    cookies: any 
-    login: (e:any) => any
-    logout: (e:any) => any
-}
-
-const UserContext = createContext<Cookies | null>(null);
+const UserContext = createContext<null | any>(null);
 
 export const UserProvider = ({ children }: UserAdmin) => {
     const navigate = useNavigate();
-    const [cookies, setCookies, removeCookie] = useCookies();
+    const [cookies, setCookies, removeCookie] = useCookies()
 
-    const login = async (admin: Props) => {
+    const login = (admin: Props) => {
         authService.create(admin).then((res) => {
-            setCookies('token', res.data.data.authentication.sessionToken);
-            setCookies('USERDATA', res.data.data);
+            setCookies('COOKI3AUTH', res.data.data.authentication.sessionToken);
+            localStorage.setItem('USERDATA', JSON.stringify(res.data.data));
             navigate("/");
         })
             .catch(err => console.log(err.response.data));
-
     };
 
     const logout = () => {
-        ['token', 'name'].forEach(obj => removeCookie(obj)); // remove data save in cookies
+        ['COOKI3AUTH', 'USERDATA'].forEach(obj => removeCookie(obj));
         navigate('/login');
     };
 
