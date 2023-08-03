@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { ReactNode, createContext, useContext, useMemo, useEffect } from 'react';
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom';
 import authService from '../service/authService';
@@ -36,6 +36,8 @@ export const UserProvider = ({ children }: UserAdmin) => {
         ['COOKI3AUTH', 'USERDATA'].forEach(obj => removeCookie(obj));
         navigate('/login');
     };
+
+    
 
     const value = useMemo(
         () => ({

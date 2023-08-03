@@ -4,6 +4,9 @@ import { FiHome, FiSettings, FiMenu, FiBell, FiChevronDown } from 'react-icons/f
 import { PiCallBell, PiUsersThreeLight, PiCaretLeftBold, PiShoppingBagLight} from 'react-icons/pi'
 import { MdRestaurantMenu } from 'react-icons/md';
 import { IconType } from 'react-icons'
+import { useAuth } from '../hooks/useAuth';
+import useUsers from '../hooks/useUser';
+import { User } from '../service/userService';
 
 interface LinkItemProps {
     name: string
@@ -16,7 +19,8 @@ interface NavItemProps extends FlexProps {
 }
 
 interface MobileProps extends FlexProps {
-    onOpen: () => void
+    onOpen: () => void,
+    user: any
 }
 
 interface SidebarProps extends BoxProps {
@@ -94,7 +98,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
     )
 }
 
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, user, ...rest }: MobileProps) => {
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -139,7 +143,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">Justina Clark</Text>
+                                    <Text fontSize="sm">{user.username}</Text>
                                     <Text fontSize="xs" color="gray.600">
                                         Admin
                                     </Text>
@@ -167,6 +171,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
 const SidebarMenu = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {users} = useUsers();
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -183,7 +188,7 @@ const SidebarMenu = () => {
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} />
+            <MobileNav onOpen={onOpen} user= {users} />
             <Box ml={{ base: 0, md: 60 }} p="4">
                 <Outlet/>
             </Box>
