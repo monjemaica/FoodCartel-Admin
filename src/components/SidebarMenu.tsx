@@ -1,7 +1,7 @@
-import{Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { IconButton, Avatar, Box, Flex, HStack, VStack, Icon, useColorModeValue, Text, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Image } from '@chakra-ui/react'
 import { FiHome, FiSettings, FiMenu, FiBell, FiChevronDown } from 'react-icons/fi'
-import { PiCallBell, PiUsersThreeLight, PiCaretLeftBold, PiShoppingBagLight} from 'react-icons/pi'
+import { PiCallBell, PiUsersThreeLight, PiCaretLeftBold, PiShoppingBagLight } from 'react-icons/pi'
 import { MdRestaurantMenu } from 'react-icons/md';
 import { IconType } from 'react-icons'
 import { useAuth } from '../hooks/useAuth';
@@ -15,6 +15,7 @@ interface LinkItemProps {
 
 interface NavItemProps extends FlexProps {
     icon: IconType
+    link: string
     children: React.ReactNode
 }
 
@@ -47,7 +48,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <HStack justifyContent={'flex-end'}  display={{ base: 'flex', md: 'none' }} p="10px">
+            <HStack justifyContent={'flex-end'} display={{ base: 'flex', md: 'none' }} p="10px">
 
                 <PiCaretLeftBold onClick={onClose} />
             </HStack>
@@ -55,7 +56,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 <Image src='../img/logo.jpg' boxSize='120px' objectFit='cover'></Image>
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} link={`/${link.name.toLowerCase()}`}>
                     {link.name}
                 </NavItem>
             ))}
@@ -63,11 +64,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     )
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, link, children, ...rest }: NavItemProps) => {
     return (
         <Box
             as="a"
-            href="#"
+            href={link}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -117,14 +118,8 @@ const MobileNav = ({ onOpen, user, ...rest }: MobileProps) => {
                 aria-label="open menu"
                 icon={<FiMenu />}
             />
+            <Image src='../img/logo.jpg' boxSize='50px' objectFit='cover' display={{base:'flex', md:'none'}}></Image>
 
-            <Text
-                display={{ base: 'flex', md: 'none' }}
-                fontSize="2xl"
-                fontFamily="monospace"
-                fontWeight="bold">
-                Logo
-            </Text>
 
             <HStack spacing={{ base: '0', md: '6' }}>
                 <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
@@ -171,7 +166,7 @@ const MobileNav = ({ onOpen, user, ...rest }: MobileProps) => {
 
 const SidebarMenu = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const {users} = useUsers();
+    const { users } = useUsers();
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -188,9 +183,9 @@ const SidebarMenu = () => {
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} user= {users} />
+            <MobileNav onOpen={onOpen} user={users} />
             <Box ml={{ base: 0, md: 60 }} p="4">
-                <Outlet/>
+                <Outlet />
             </Box>
         </Box>
     )
