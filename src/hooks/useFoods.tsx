@@ -18,7 +18,6 @@ const useFoods = () => {
       request.then((res) => {
         setFoods(res.data);
         setIsLoading(false);
-        console.log(res.data);
       })
         .catch(err => {
           if (err instanceof CanceledError) return;
