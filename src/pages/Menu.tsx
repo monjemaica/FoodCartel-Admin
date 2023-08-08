@@ -42,7 +42,7 @@ export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
               {foods.map((food) =>
                 <Tr key={food._id}>
                   <Td>{food._id}</Td>
-                  <Td><Avatar src={`../../${food.img}`} size='lg' border='10px' borderColor={'green'}></Avatar></Td>
+                  <Td><Avatar src={`http://localhost:8080/${food?.img}`} size='lg' border='10px' borderColor={'green'}></Avatar></Td>
                   <Td>{food.name}</Td>
                   <Td ><Text as='b'>₱{food.price.toFixed(2)}</Text></Td>
                   <Td>

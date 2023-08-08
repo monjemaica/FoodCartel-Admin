@@ -1,9 +1,11 @@
 import { FormControl, Stack, InputGroup, InputLeftElement, Icon, Input, HStack, Button, Radio, RadioGroup, FormLabel, Switch } from '@chakra-ui/react'
-import { FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiFoodMenu, BiDollar } from 'react-icons/bi'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbPhotoEdit } from 'react-icons/tb'
 import { FaCheckToSlot } from 'react-icons/fa6'
+import foodService from '../service/foodService'
+import useFoods from '../hooks/useFoods'
 
 interface Props {
     onClose: (e: any) => void
@@ -14,17 +16,39 @@ export const AddFoodForm = ({ onClose }: Props) => {
         name: '',
         price: '',
         stocks: '',
-        img: '',
         status: false
     })
 
+    const [img, setImg] = useState<File>()
+    const { foods, error, setError, setFoods } = useFoods()
+
     const addHandler = (e: FormEvent) => {
         e.preventDefault();
-        console.log(food);
+
+
+        const formData = new FormData();
+        formData.append('name', food.name);
+        formData.append('price', food.price);
+        formData.append('stocks', food.stocks);
+        formData.append('status', `${food.status}`);
+
+        if (!img) return null;
+        formData.append('img', img);
+
+        foodService.create(formData).then((res) => setFoods(foods))
+        .catch( (err) => setError(err.message))
+    }
+
+    const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
+
+        if (!files) return null;
+        setImg(files[0])
     }
 
     return (
         <form onSubmit={addHandler}>
+            {error}
             <FormControl isRequired>
                 <Stack spacing={3}>
                     <InputGroup>
@@ -49,13 +73,13 @@ export const AddFoodForm = ({ onClose }: Props) => {
                         <InputLeftElement pointerEvents='none'>
                             <Icon as={TbPhotoEdit} boxSize={5} color='gray.300' />
                         </InputLeftElement>
-                        <Input type='file' onChange={(e) => setFood({ ...food, img: e.target.value })} pt={1} />
+                        <Input type='file' onChange={uploadHandler} pt={1} />
                     </InputGroup>
                     <FormControl display='flex' alignItems='center'>
                         <FormLabel htmlFor='email-alerts' mb='0'>
                             Enable item in store?
                         </FormLabel>
-                        <Switch id='email-alerts' onChange={(e) => setFood({ ...food, status: !food.status})}/>
+                        <Switch id='email-alerts' onChange={(e) => setFood({ ...food, status: !food.status })} />
                     </FormControl>
                 </Stack>
             </FormControl>
