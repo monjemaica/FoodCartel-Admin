@@ -1,29 +1,36 @@
-import React from 'react'
 import { TableComponent } from '../components/TableComponent'
-import { Avatar, Badge, Box, Button, Center, Divider, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Avatar, Badge, Box, Button, Divider, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import useFoods from '../hooks/useFoods'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
+import { FormEvent } from 'react'
 
 interface Props {
+  addItem: (e: any) => void
   toggleUpdateModal: (e: any) => void
 }
 
-export const Menu = ({ toggleUpdateModal }: Props) => {
+export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
   const { foods } = useFoods();
   console.log(foods);
+
+  const addHandler = (e:FormEvent) => {
+    e.preventDefault();
+    addItem(e);
+  }
+
   return (
     <>
       <TableComponent header='Menu'>
         <Divider p={2} />
         <Box py={5}>
-          <Button leftIcon={<AddIcon />} colorScheme='green'>Add Item</Button>
+          <Button onClick={addHandler} leftIcon={<AddIcon />} colorScheme='green'>Add Item</Button>
         </Box>
         <TableContainer>
           <Table variant='simple'>
             <Thead>
               <Tr>
-                <Th >ID</Th>
+                <Th>ID</Th>
                 <Th>IMG</Th>
                 <Th>Customer Name</Th>
                 <Th>Amount</Th>

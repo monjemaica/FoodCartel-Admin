@@ -1,7 +1,5 @@
-import { PhoneIcon } from '@chakra-ui/icons';
-import { Button, FormControl, FormLabel, HStack, Icon, Input, InputGroup, InputLeftElement, Select, Stack } from '@chakra-ui/react'
-import React, { FormEvent } from 'react'
-import { CgRename } from 'react-icons/cg'
+import { Button, FormControl, HStack, Icon, Input, InputGroup, InputLeftElement, Stack } from '@chakra-ui/react'
+import { FormEvent } from 'react'
 import {BiDollar, BiFoodMenu} from 'react-icons/bi'
 import {TbPhotoEdit} from 'react-icons/tb';
 import { MdOutlineInventory2 } from 'react-icons/md';
