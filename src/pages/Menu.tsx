@@ -4,6 +4,7 @@ import { AddIcon } from '@chakra-ui/icons'
 import useFoods from '../hooks/useFoods'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import { FormEvent } from 'react'
+import { Pagination } from '../components/Pagination'
 
 interface Props {
   addItem: (e: any) => void
@@ -11,12 +12,17 @@ interface Props {
 }
 
 export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
-  const { foods } = useFoods();
+
+  const { foods,currentPage, setCurrentPage } = useFoods();
   console.log(foods);
 
-  const addHandler = (e:FormEvent) => {
+  const addHandler = (e: FormEvent) => {
     e.preventDefault();
     addItem(e);
+  }
+
+  const handleOnChange = (page:any) => {
+    setCurrentPage(page);
   }
 
   return (
@@ -50,12 +56,16 @@ export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
                       Pending
                     </Badge>
                   </Td>
-                  <Td onClick={(e) => toggleUpdateModal(e) }><HiOutlineDotsHorizontal /></Td>
+                  <Td onClick={(e) => toggleUpdateModal(e)}><HiOutlineDotsHorizontal /></Td>
                 </Tr>
               )}
 
             </Tbody>
           </Table>
+          <Pagination itemsCount={foods.length}
+            pgsize={4}
+            currentPage={1}
+            onChangePage={handleOnChange}></Pagination>
         </TableContainer>
       </TableComponent>
     </>
