@@ -1,9 +1,8 @@
-import { FormControl, Stack, InputGroup, InputLeftElement, Icon, Input, HStack, Button, Radio, RadioGroup, FormLabel, Switch } from '@chakra-ui/react'
+import { FormControl, Stack, InputGroup, InputLeftElement, Icon, Input, HStack, Button, FormLabel, Switch } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiFoodMenu, BiDollar } from 'react-icons/bi'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbPhotoEdit } from 'react-icons/tb'
-import { FaCheckToSlot } from 'react-icons/fa6'
 import foodService from '../service/foodService'
 import useFoods from '../hooks/useFoods'
 
@@ -35,7 +34,10 @@ export const AddFoodForm = ({ onClose }: Props) => {
         if (!img) return null;
         formData.append('img', img);
 
-        foodService.create(formData).then((res) => setFoods(foods))
+        foodService.create(formData).then((res) => {
+            setFoods([res.data, ...formData])
+            onClose(e);
+        })
         .catch( (err) => setError(err.message))
     }
 
