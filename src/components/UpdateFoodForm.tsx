@@ -24,7 +24,6 @@ export const UpdateMemberForm = () => {
 
     const updateHandler = (e: FormEvent) => {
         e.preventDefault();
-        console.log('update')
     }
 
     return (

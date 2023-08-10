@@ -5,6 +5,7 @@ import useFoods from '../hooks/useFoods'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import { FormEvent } from 'react'
 import { Pagination } from '../components/Pagination'
+import { paginate } from '../utils/paginate'
 
 interface Props {
   addItem: (e: any) => void
@@ -13,15 +14,16 @@ interface Props {
 
 export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
 
-  const { foods,currentPage, setCurrentPage } = useFoods();
-  console.log(foods);
+  const { foods, currentPage, pageSize, setCurrentPage } = useFoods();
+
+  const foodData = paginate(foods, currentPage, pageSize)
 
   const addHandler = (e: FormEvent) => {
     e.preventDefault();
     addItem(e);
   }
 
-  const handleOnChange = (page:any) => {
+  const handleOnChange = (page: any) => {
     setCurrentPage(page);
   }
 
@@ -45,7 +47,7 @@ export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {foods.map((food) =>
+              {foodData.map((food: any) =>
                 <Tr key={food._id}>
                   <Td>{food._id}</Td>
                   <Td><Avatar src={`http://localhost:8080/${food?.img}`} size='lg' border='10px' borderColor={'green'}></Avatar></Td>
@@ -62,10 +64,11 @@ export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
 
             </Tbody>
           </Table>
-          <Pagination itemsCount={foods.length}
+          <Pagination
+            itemsCount={foods.length}
             pgsize={4}
-            currentPage={1}
-            onChangePage={handleOnChange}></Pagination>
+            currentPage={currentPage}
+            onChangePage={handleOnChange} />
         </TableContainer>
       </TableComponent>
     </>

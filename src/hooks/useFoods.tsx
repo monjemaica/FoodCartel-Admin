@@ -6,9 +6,10 @@ import { Food } from "../service/foodService";
 
 const useFoods = () => {
   const [foods, setFoods] = useState<Food[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPagesize] = useState(5);
 
 
   useEffect(() => {
@@ -29,6 +30,6 @@ const useFoods = () => {
     return () => cancel();
   }, [])
 
-  return { foods, currentPage, error, isLoading, setFoods, setError, setCurrentPage };
+  return { foods, currentPage, pageSize, error, isLoading, setFoods, setError, setCurrentPage, setPagesize};
 }
 export default useFoods;

@@ -1,32 +1,28 @@
 import _ from 'lodash'
-import {Button} from '@chakra-ui/react'
-interface PaginationProps{
-    itemsCount: any
+import { Button } from '@chakra-ui/react'
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
+interface PaginationProps {
+    itemsCount: number
     pgsize: number
-    onChangePage: (e: any) =>  void
-    currentPage:number
+    onChangePage: (e: any) => void
+    currentPage: number
 }
 
 export const Pagination = ({ itemsCount, pgsize, onChangePage, currentPage }: PaginationProps) => {
     const pagesCount = Math.ceil(itemsCount / pgsize);
-    const pages = _.range(1, pagesCount + 1);
-
-    console.log('pages: ',pages)
-    // if (pages == 1) {
-    //     return null;
-    // }
+    const pages = _.range(1, pagesCount );
+    const lastPage = pagesCount - 1;
 
     return (
-        <nav aria-label="Page navigation example">
-            <ul className="pagination">
-                {pages.map((page,i) =>
-                    <Button isActive = {page === currentPage ? true : false}>{page}</Button>
-                    // <li key={i} className={page === currentPage ? "page-item active" : "page-item"}>
-                        /* <a className="page-link" onClick={() => onChangePage(page)}>{page}</a> */
-                    // </li>
+        <>
+            <Button size='xs' onClick={() => onChangePage(currentPage >= 2 ? currentPage - 1 : 1)}><ChevronLeftIcon /> </Button>
+            {
+                pages.map((page, i) =>
+                    <Button size='xs' key={i} isActive={page === currentPage ? true : false} onClick={() => onChangePage(page)}>{page}</Button>
+                )
+            }
+            <Button size='xs' onClick={() => onChangePage(currentPage !== lastPage ? currentPage + 1 : lastPage)}><ChevronRightIcon /> </Button>
+        </>
 
-                )}
-            </ul>
-        </nav>
     );
 }
