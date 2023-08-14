@@ -1,38 +1,28 @@
 import { TableComponent } from '../components/TableComponent'
 import { Avatar, Badge, Box, Button, Divider, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
-import useFoods from '../hooks/useFoods'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
-import { FormEvent } from 'react'
 import { Pagination } from '../components/Pagination'
-import { paginate } from '../utils/paginate'
+import { Food } from '../service/foodService'
 
 interface Props {
-  addItem: (e: any) => void
-  toggleUpdateModal: (e: any) => void
+  foodData: Food[]
+  onAddHandler: (e: any) => any;
+  updateHandler: (e: any, food: any) => any;
+  onPageChange: (e: any) => any;
+  currentPage: number;
+  totalItems: number;
 }
 
-export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
+export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, currentPage, totalItems }: Props) => {
 
-  const { foods, currentPage, pageSize, setCurrentPage } = useFoods();
-
-  const foodData = paginate(foods, currentPage, pageSize)
-
-  const addHandler = (e: FormEvent) => {
-    e.preventDefault();
-    addItem(e);
-  }
-
-  const handleOnChange = (page: any) => {
-    setCurrentPage(page);
-  }
 
   return (
     <>
       <TableComponent header='Menu'>
         <Divider p={2} />
         <Box py={5}>
-          <Button onClick={addHandler} leftIcon={<AddIcon />} colorScheme='green'>Add Item</Button>
+          <Button onClick={onAddHandler} leftIcon={<AddIcon />} colorScheme='green'>Add Item</Button>
         </Box>
         <TableContainer>
           <Table variant='simple'>
@@ -58,17 +48,17 @@ export const Menu = ({ addItem, toggleUpdateModal }: Props) => {
                       Pending
                     </Badge>
                   </Td>
-                  <Td onClick={(e) => toggleUpdateModal(e)}><HiOutlineDotsHorizontal /></Td>
+                  <Td onClick={(e)=>updateHandler(e, food)}><HiOutlineDotsHorizontal /></Td>
                 </Tr>
               )}
 
             </Tbody>
           </Table>
           <Pagination
-            itemsCount={foods.length}
+            itemsCount={totalItems}
             pgsize={4}
             currentPage={currentPage}
-            onChangePage={handleOnChange} />
+            onChangePage={onPageChange} />
         </TableContainer>
       </TableComponent>
     </>

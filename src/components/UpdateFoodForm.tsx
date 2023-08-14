@@ -1,66 +1,65 @@
-import { Button, FormControl, HStack, Icon, Input, InputGroup, InputLeftElement, Stack } from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Switch, HStack, Icon, Input, InputGroup, InputLeftElement, Stack } from '@chakra-ui/react'
 import { FormEvent } from 'react'
-import {BiDollar, BiFoodMenu} from 'react-icons/bi'
-import {TbPhotoEdit} from 'react-icons/tb';
+import { BiDollar, BiFoodMenu } from 'react-icons/bi'
+import { TbPhotoEdit } from 'react-icons/tb';
 import { MdOutlineInventory2 } from 'react-icons/md';
-// interface Family {
-//     _id: string,
-//     name: string,
-//     age: number,
-//     role: string,
-//     birthday: string
-// }
 
-// interface Props {
-//     families: Family[]
-//     selectedMember: any,
-//     setMember: (e: any) => any,
-//     updateMember: (e: any) => any,
-//     error: (e: any) => any,
-//     onClose: (e: any) => any
-// }
+interface Props {
+    food: any
+    setFood: (e: any) => any
+}
 
-export const UpdateMemberForm = () => {
-
+export const UpdateMemberForm = ({ food, setFood }: Props) => {
+    console.log(food)
     const updateHandler = (e: FormEvent) => {
         e.preventDefault();
+        const newFood = {
+            _id: food._id,
+            name: food.name,
+            img: food.img,
+            price: food.price,
+            stocks: food.stocks
+
+        }
+        console.log(newFood);
     }
 
     return (
         <>
             <form onSubmit={updateHandler}>
+
                 <FormControl isRequired>
                     <Stack spacing={3}>
                         <InputGroup>
                             <InputLeftElement pointerEvents='none'>
-                                <Icon as={BiFoodMenu} boxSize={5} color='gray.300'/> 
+                                <Icon as={BiFoodMenu} boxSize={5} color='gray.300' />
                             </InputLeftElement>
-                            <Input type='tel' placeholder='Food Name' />
-                        </InputGroup>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents='none'>
-                                <Icon as={TbPhotoEdit} boxSize={5} color='gray.300'/> 
-                            </InputLeftElement>
-                            <Input type='file' pt={1} />
+                            <Input type='text' value={food.name} onChange={(e) => setFood({ ...food, name: e.target.value })} placeholder='Food Name' />
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement pointerEvents='none'>
                                 <Icon as={BiDollar} color='gray.300' />
                             </InputLeftElement>
-                            <Input type='tel' placeholder='Food Price' />
-                        </InputGroup>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents='none'>
-                                <Icon as={BiDollar} color='gray.300' />
-                            </InputLeftElement>
-                            <Input type='tel' placeholder='Status' />
+                            <Input type='number' value={food.price} onChange={(e) => setFood({ ...food, price: e.target.value })} placeholder='Food Price' />
                         </InputGroup>
                         <InputGroup>
                             <InputLeftElement pointerEvents='none'>
                                 <Icon as={MdOutlineInventory2} color='gray.300' />
                             </InputLeftElement>
-                            <Input type='tel' placeholder='Stocks' />
+                            <Input type='number' value={food.stocks} onChange={(e) => setFood({ ...food, stocks: e.target.value })} placeholder='Stocks' />
                         </InputGroup>
+                        <InputGroup>
+                            <InputLeftElement pointerEvents='none'>
+                                <Icon as={TbPhotoEdit} boxSize={5} color='gray.300' />
+                            </InputLeftElement>
+                            <Input type='file' pt={1} />
+                        </InputGroup>
+                        <FormControl display='flex' alignItems='center'>
+                            <FormLabel htmlFor='email-alerts' mb='0'>
+                                Enable item in store?
+                            </FormLabel>
+                            <Switch id='email-alerts' isChecked={food.status} onChange={(e) => setFood({ ...food, status: !food.status })} />
+                        </FormControl>
                     </Stack>
                 </FormControl>
 

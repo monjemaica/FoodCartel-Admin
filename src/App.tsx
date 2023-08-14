@@ -1,31 +1,56 @@
+import { FormEvent } from 'react'
 import { Route, Routes } from 'react-router-dom';
+import { useDisclosure } from '@chakra-ui/react';
 import './App.css'
 import SidebarMenu from './components/SidebarMenu'
+import { AddFoodForm } from './components/AddFoodForm';
+import { ModalForm } from './components/ModalForm';
+import { UpdateMemberForm } from './components/UpdateFoodForm';
 import { Home } from './pages/Home';
 import { Menu } from './pages/Menu';
 import { Orders } from './pages/Orders';
 import { Reservations } from './pages/Reservations';
 import { Customers } from './pages/Customers';
 import { Login } from './pages/Login';
+
+import { paginate } from './utils/paginate';
+
 import { PrivateRoute } from './hooks/PrivateRoute';
-import { ModalForm } from './components/ModalForm';
-import { useDisclosure } from '@chakra-ui/react';
-import { UpdateMemberForm } from './components/UpdateFoodForm';
-import { AddFoodForm } from './components/AddFoodForm';
+import useFoods from './hooks/useFoods';
 
 function App() {
   const addModal = useDisclosure()
   const editModal = useDisclosure()
+
+  const { foods, setFoods, selectedFood, setSelectedFood, currentPage, pageSize, setCurrentPage } = useFoods();
+
+  const foodData = paginate(foods, currentPage, pageSize)
+
+  const addHandler = (e: FormEvent) => {
+    e.preventDefault();
+    addModal.onOpen();
+  }
+
+  const updateHandler = (e: FormEvent, food: any) => {
+    e.preventDefault();
+    editModal.onOpen();
+    setSelectedFood(food);
+  }
+
+  const handleOnChange = (page: any) => {
+    setCurrentPage(page);
+  }
+
   return (
     <>
-      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm></UpdateMemberForm>}></ModalForm>
+      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm food={selectedFood} setFood={setFoods}></UpdateMemberForm>}></ModalForm>
       <ModalForm isOpen={addModal.isOpen} onClose={addModal.onClose} modalHeader='Add Item' modalBody={<AddFoodForm onClose={addModal.onClose}/>}></ModalForm>
       <Routes>
         {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}
         <Route element={<PrivateRoute />}>
           <Route element={<SidebarMenu />}>
             <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu addItem={addModal.onOpen} toggleUpdateModal={editModal.onOpen}/>} />
+            <Route path="/menu" element={<Menu foodData={foodData} onAddHandler={addHandler} updateHandler={updateHandler} onPageChange={handleOnChange} currentPage={currentPage} totalItems={foods.length}/>} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/reservations" element={<Reservations />} />
             <Route path="/customers" element={<Customers />} />

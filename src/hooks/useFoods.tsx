@@ -6,6 +6,7 @@ import { Food } from "../service/foodService";
 
 const useFoods = () => {
   const [foods, setFoods] = useState<Food[]>([]);
+  const [selectedFood, setSelectedFood] = useState<Food[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +31,6 @@ const useFoods = () => {
     return () => cancel();
   }, [])
 
-  return { foods, currentPage, pageSize, error, isLoading, setFoods, setError, setCurrentPage, setPagesize};
+  return { foods,selectedFood, currentPage, pageSize, error, isLoading, setFoods, setSelectedFood, setError, setCurrentPage, setPagesize};
 }
 export default useFoods;
