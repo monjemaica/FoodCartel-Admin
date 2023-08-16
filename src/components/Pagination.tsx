@@ -10,9 +10,9 @@ interface PaginationProps {
 
 export const Pagination = ({ itemsCount, pgsize, onChangePage, currentPage }: PaginationProps) => {
     const pagesCount = Math.ceil(itemsCount / pgsize);
-    const pages = _.range(1, pagesCount );
-    const lastPage = pagesCount - 1;
-
+    const pages = _.range(1, pagesCount + 1);
+    const lastPage = pagesCount;
+    
     return (
         <>
             <Button size='xs' onClick={() => onChangePage(currentPage >= 2 ? currentPage - 1 : 1)}><ChevronLeftIcon /> </Button>

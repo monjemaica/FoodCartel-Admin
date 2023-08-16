@@ -36,11 +36,7 @@ export const AddFoodForm = ({ onClose }: Props) => {
 
         foodService.create(formData).then((res) => {
             setFoods([res.data.data, ...foods])
-            console.log(res.data.data)
             console.log([res.data.data, ...foods])
-            // const foodObj = JSON.stringify(Object.fromEntries(formData));
-            // setFoods([foodObj, ...foods])
-            // // setFoods([res.data.data, ...foodObj])
             onClose(e);
         })
         .catch( (err) => setError(err.message))

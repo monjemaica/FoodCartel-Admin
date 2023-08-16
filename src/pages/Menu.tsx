@@ -44,8 +44,8 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
                   <Td>{food.name}</Td>
                   <Td ><Text as='b'>₱{food.price.toFixed(2)}</Text></Td>
                   <Td>
-                    <Badge variant='solid' colorScheme='orange' borderRadius={10} px={2} py={.5} fontWeight={500}>
-                      Pending
+                    <Badge variant='solid' colorScheme={food.status ? 'green' : 'orange'} borderRadius={10} px={2} py={.5} fontWeight={500}>
+                      {food.status ? 'Available' : 'Not Available'}
                     </Badge>
                   </Td>
                   <Td onClick={(e)=>updateHandler(e, food)}><HiOutlineDotsHorizontal /></Td>

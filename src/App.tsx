@@ -40,10 +40,12 @@ function App() {
   const handleOnChange = (page: any) => {
     setCurrentPage(page);
   }
+  
+  if(!foodData) return null;
 
   return (
     <>
-      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm food={selectedFood} setFood={setFoods}></UpdateMemberForm>}></ModalForm>
+      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm selectedFood={selectedFood} setSelectedFood={setSelectedFood}></UpdateMemberForm>}></ModalForm>
       <ModalForm isOpen={addModal.isOpen} onClose={addModal.onClose} modalHeader='Add Item' modalBody={<AddFoodForm onClose={addModal.onClose}/>}></ModalForm>
       <Routes>
         {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}
