@@ -31,6 +31,6 @@ const useFoods = () => {
     return () => cancel();
   }, [])
 
-  return { foods,selectedFood, currentPage, pageSize, error, isLoading, setFoods, setSelectedFood, setError, setCurrentPage, setPagesize};
+  return { foods,selectedFood, currentPage, pageSize, error, isLoading, setFoods, setSelectedFood, setError, setCurrentPage, setPagesize, setIsLoading};
 }
 export default useFoods;

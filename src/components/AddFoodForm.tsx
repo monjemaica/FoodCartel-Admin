@@ -47,12 +47,6 @@ export const AddFoodForm = ({ foods, setFoods, onClose }: Props) => {
             .catch((err) => setError(err.message))
     }
 
-    // const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const { files } = e.target;
-
-    //     if (!files) return null;
-    //     setImg(files[0])
-    // }
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
 

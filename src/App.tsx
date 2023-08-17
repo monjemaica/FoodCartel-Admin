@@ -22,7 +22,7 @@ function App() {
   const addModal = useDisclosure()
   const editModal = useDisclosure()
 
-  const { foods, setFoods, selectedFood, setSelectedFood, currentPage, pageSize, setCurrentPage, error, setError } = useFoods();
+  const { foods, setFoods, selectedFood, setSelectedFood, currentPage, pageSize, setCurrentPage } = useFoods();
 
   const foodData = paginate(foods, currentPage, pageSize)
 
