@@ -41,11 +41,11 @@ function App() {
     setCurrentPage(page);
   }
   
-  if(!foodData) return null;
+  // if(!foodData) return null;
 
   return (
     <>
-      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm selectedFood={selectedFood} setSelectedFood={setSelectedFood}></UpdateMemberForm>}></ModalForm>
+      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm foods={foodData} selectedFood={selectedFood} setSelectedFood={setSelectedFood} onClose={editModal.onClose}></UpdateMemberForm>}></ModalForm>
       <ModalForm isOpen={addModal.isOpen} onClose={addModal.onClose} modalHeader='Add Item' modalBody={<AddFoodForm onClose={addModal.onClose}/>}></ModalForm>
       <Routes>
         {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}

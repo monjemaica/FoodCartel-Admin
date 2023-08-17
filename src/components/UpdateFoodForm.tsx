@@ -1,29 +1,48 @@
-import { Button, FormControl, FormLabel, Switch, Image, HStack, Icon, Input, InputGroup, InputLeftElement, Stack, Avatar, AvatarBadge, Center, IconButton } from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Switch, HStack, Icon, Input, InputGroup, InputLeftElement, Stack, Avatar, AvatarBadge, Center, IconButton } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiDollar, BiFoodMenu } from 'react-icons/bi'
-import { TbPhotoEdit } from 'react-icons/tb';
 import { MdOutlineInventory2 } from 'react-icons/md';
 import { SmallCloseIcon } from '@chakra-ui/icons';
+import foodService from '../service/foodService';
+import useFoods from '../hooks/useFoods';
 
 interface Props {
+    foods: any
     selectedFood: any
     setSelectedFood: (e: any) => any
+    onClose: (e: any) => void
 }
 
-export const UpdateMemberForm = ({ selectedFood, setSelectedFood }: Props) => {
-    const [image, setImage] = useState({ preview: "", raw: {} });
+export const UpdateMemberForm = ({ foods, selectedFood, setSelectedFood, onClose }: Props) => {
+    const [previewImg, setpreviewImg] = useState("");
+    const [img, setImg] = useState<File>()
+
+    const {setFoods} = useFoods();
 
     const updateHandler = (e: FormEvent) => {
         e.preventDefault();
         const newFood = {
             _id: selectedFood._id,
             name: selectedFood.name,
-            img: selectedFood.img,
             price: selectedFood.price,
-            stocks: selectedFood.stocks
-
+            stocks: selectedFood.stocks,
+            status: selectedFood.status
         }
 
+        const formData = new FormData();
+        formData.append('name', newFood.name);
+        formData.append('price', newFood.price);
+        formData.append('stocks', newFood.stocks);
+        formData.append('status', newFood.status);
+
+        if (img) {
+            formData.append('img', img);
+        }
+
+        foodService.update(formData, newFood._id).then((res) => {
+            setFoods([res.data.data, ...foods])
+            onClose(e);
+        }).catch((err) => err(err.message));
 
     }
 
@@ -31,10 +50,8 @@ export const UpdateMemberForm = ({ selectedFood, setSelectedFood }: Props) => {
         const { files } = e.target;
 
         if (!files) return null;
-        setImage({
-            preview: URL.createObjectURL(files[0]),
-            raw: files[0]
-        });
+        setpreviewImg(URL.createObjectURL(files[0]));
+        setImg(files[0]);
     }
 
     return (
@@ -44,24 +61,22 @@ export const UpdateMemberForm = ({ selectedFood, setSelectedFood }: Props) => {
                 <FormControl isRequired>
                     <Stack spacing={3}>
                         <FormControl id="userName">
-                            <Stack direction={['column', 'row']} spacing={6}>
-                                <Center>
-                                    <label htmlFor="fileInput">
-                                        <Avatar size="xl" src={image.preview ? image.preview : `http://localhost:8080/${selectedFood.img}`}>
-                                            <AvatarBadge
-                                                as={IconButton}
-                                                size="sm"
-                                                rounded="full"
-                                                top="-10px"
-                                                colorScheme="red"
-                                                aria-label="remove Image"
-                                                icon={<SmallCloseIcon />}
-                                            />
-                                        </Avatar>
-                                        <input type="file" id="fileInput" name="fileInput" onChange={uploadHandler} hidden />
-                                    </label>
-                                </Center>
-                            </Stack>
+                            <Center>
+                                <label htmlFor="fileInput">
+                                    <Avatar size="xl" src={previewImg ? previewImg : `http://localhost:8080/${selectedFood.img}`}>
+                                        <AvatarBadge
+                                            as={IconButton}
+                                            size="sm"
+                                            rounded="full"
+                                            top="-10px"
+                                            colorScheme="red"
+                                            aria-label="remove Image"
+                                            icon={<SmallCloseIcon />}
+                                        />
+                                    </Avatar>
+                                    <input type="file" id="fileInput" name="fileInput" onChange={uploadHandler} hidden />
+                                </label>
+                            </Center>
                         </FormControl>
 
                         <FormControl id="name" isRequired>

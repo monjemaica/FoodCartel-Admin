@@ -31,8 +31,9 @@ export const AddFoodForm = ({ onClose }: Props) => {
         formData.append('stocks', food.stocks);
         formData.append('status', `${food.status}`);
 
-        if (!img) return null;
-        formData.append('img', img);
+        if (img) {
+            formData.append('img', img);
+        }
 
         foodService.create(formData).then((res) => {
             setFoods([res.data.data, ...foods])

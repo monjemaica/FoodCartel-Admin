@@ -12,10 +12,10 @@ export const Pagination = ({ itemsCount, pgsize, onChangePage, currentPage }: Pa
     const pagesCount = Math.ceil(itemsCount / pgsize);
     const pages = _.range(1, pagesCount + 1);
     const lastPage = pagesCount;
-    
+
     return (
         <>
-            <Button size='xs' onClick={() => onChangePage(currentPage >= 2 ? currentPage - 1 : 1)}><ChevronLeftIcon /> </Button>
+            <Button size='xs' onClick={() => onChangePage(currentPage)}><ChevronLeftIcon /> </Button>
             {
                 pages.map((page, i) =>
                     <Button size='xs' key={i} isActive={page === currentPage ? true : false} onClick={() => onChangePage(page)}>{page}</Button>
