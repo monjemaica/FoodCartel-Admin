@@ -12,9 +12,10 @@ interface Props {
   onPageChange: (e: any) => any;
   currentPage: number;
   totalItems: number;
+  pageSize: any;
 }
 
-export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, currentPage, totalItems }: Props) => {
+export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, currentPage, totalItems, pageSize }: Props) => {
 
 
   return (
@@ -56,7 +57,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
           </Table>
           <Pagination
             itemsCount={totalItems}
-            pgsize={4}
+            pgsize={pageSize}
             currentPage={currentPage}
             onChangePage={onPageChange} />
         </TableContainer>

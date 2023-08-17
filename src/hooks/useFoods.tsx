@@ -10,7 +10,7 @@ const useFoods = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPagesize] = useState(5);
+  const [pageSize, setPagesize] = useState(10);
 
 
   useEffect(() => {

@@ -22,7 +22,7 @@ function App() {
   const addModal = useDisclosure()
   const editModal = useDisclosure()
 
-  const { foods, setFoods, selectedFood, setSelectedFood, currentPage, pageSize, setCurrentPage } = useFoods();
+  const { foods, setFoods, selectedFood, setSelectedFood, currentPage, pageSize, setCurrentPage, error, setError } = useFoods();
 
   const foodData = paginate(foods, currentPage, pageSize)
 
@@ -45,14 +45,14 @@ function App() {
 
   return (
     <>
-      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm foods={foodData} selectedFood={selectedFood} setSelectedFood={setSelectedFood} onClose={editModal.onClose}></UpdateMemberForm>}></ModalForm>
-      <ModalForm isOpen={addModal.isOpen} onClose={addModal.onClose} modalHeader='Add Item' modalBody={<AddFoodForm onClose={addModal.onClose}/>}></ModalForm>
+      <ModalForm isOpen={editModal.isOpen} onClose={editModal.onClose} modalHeader='Edit Item' modalBody={<UpdateMemberForm foods={foodData} setFoods={setFoods} selectedFood={selectedFood} setSelectedFood={setSelectedFood} onClose={editModal.onClose}></UpdateMemberForm>}></ModalForm>
+      <ModalForm isOpen={addModal.isOpen} onClose={addModal.onClose} modalHeader='Add Item' modalBody={<AddFoodForm foods={foods} setFoods={setFoods} onClose={addModal.onClose}/>}></ModalForm>
       <Routes>
         {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}
         <Route element={<PrivateRoute />}>
           <Route element={<SidebarMenu />}>
             <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu foodData={foodData} onAddHandler={addHandler} updateHandler={updateHandler} onPageChange={handleOnChange} currentPage={currentPage} totalItems={foods.length}/>} />
+            <Route path="/menu" element={<Menu foodData={foodData} onAddHandler={addHandler} updateHandler={updateHandler} onPageChange={handleOnChange} currentPage={currentPage} totalItems={foods.length} pageSize={pageSize}/>} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/reservations" element={<Reservations />} />
             <Route path="/customers" element={<Customers />} />

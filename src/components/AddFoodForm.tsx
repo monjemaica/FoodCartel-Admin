@@ -3,14 +3,16 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiFoodMenu, BiDollar } from 'react-icons/bi'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbPhotoEdit } from 'react-icons/tb'
-import foodService from '../service/foodService'
+import foodService, { Food } from '../service/foodService'
 import useFoods from '../hooks/useFoods'
 
 interface Props {
+    foods: Food[]
+    setFoods: (e: any) => any
     onClose: (e: any) => void
 }
 
-export const AddFoodForm = ({ onClose }: Props) => {
+export const AddFoodForm = ({ foods,setFoods, onClose }: Props) => {
     const [food, setFood] = useState({
         name: '',
         price: '',
@@ -19,7 +21,7 @@ export const AddFoodForm = ({ onClose }: Props) => {
     })
 
     const [img, setImg] = useState<File>()
-    const { foods, error, setError, setFoods } = useFoods()
+    const { error, setError } = useFoods()
 
     const addHandler = (e: FormEvent) => {
         e.preventDefault();
@@ -36,8 +38,8 @@ export const AddFoodForm = ({ onClose }: Props) => {
         }
 
         foodService.create(formData).then((res) => {
-            setFoods([res.data.data, ...foods])
             console.log([res.data.data, ...foods])
+            setFoods([res.data.data, ...foods])
             onClose(e);
         })
         .catch( (err) => setError(err.message))

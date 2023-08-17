@@ -3,21 +3,21 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiDollar, BiFoodMenu } from 'react-icons/bi'
 import { MdOutlineInventory2 } from 'react-icons/md';
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import foodService from '../service/foodService';
+import foodService, { Food } from '../service/foodService';
 import useFoods from '../hooks/useFoods';
 
+
 interface Props {
-    foods: any
+    foods: Food[]
     selectedFood: any
     setSelectedFood: (e: any) => any
+    setFoods: (e: any) => any
     onClose: (e: any) => void
 }
 
-export const UpdateMemberForm = ({ foods, selectedFood, setSelectedFood, onClose }: Props) => {
+export const UpdateMemberForm = ({ foods, selectedFood, setFoods, setSelectedFood, onClose }: Props) => {
     const [previewImg, setpreviewImg] = useState("");
     const [img, setImg] = useState<File>()
-
-    const {setFoods} = useFoods();
 
     const updateHandler = (e: FormEvent) => {
         e.preventDefault();
@@ -28,6 +28,7 @@ export const UpdateMemberForm = ({ foods, selectedFood, setSelectedFood, onClose
             stocks: selectedFood.stocks,
             status: selectedFood.status
         }
+        const updateFood = foods.map(food => food._id === selectedFood._id ? {...food, ...selectedFood}: food);
 
         const formData = new FormData();
         formData.append('name', newFood.name);
@@ -40,7 +41,7 @@ export const UpdateMemberForm = ({ foods, selectedFood, setSelectedFood, onClose
         }
 
         foodService.update(formData, newFood._id).then((res) => {
-            setFoods([res.data.data, ...foods])
+            setFoods(updateFood)
             onClose(e);
         }).catch((err) => err(err.message));
 
