@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, currentPage, totalItems, pageSize }: Props) => {
-  console.log(foodData)
+
   return (
     <>
       <TableComponent header='Menu'>

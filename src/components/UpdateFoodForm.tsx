@@ -61,7 +61,7 @@ export const UpdateMemberForm = ({ foods, selectedFood, setFoods, setSelectedFoo
 
                 <FormControl isRequired>
                     <Stack spacing={3}>
-                        <FormControl id="userName">
+                        <FormControl>
                             <Center>
                                 <label htmlFor="fileInput">
                                     <Avatar size="xl" src={previewImg ? previewImg : `http://localhost:8080/${selectedFood.img}`}>
