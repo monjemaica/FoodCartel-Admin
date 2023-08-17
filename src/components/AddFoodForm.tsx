@@ -38,8 +38,8 @@ export const AddFoodForm = ({ foods,setFoods, onClose }: Props) => {
         }
 
         foodService.create(formData).then((res) => {
-            console.log([res.data.data, ...foods])
-            setFoods([res.data.data, ...foods])
+            console.log([ ...foods, res.data.data])
+            setFoods([ ...foods, res.data.data])
             onClose(e);
         })
         .catch( (err) => setError(err.message))

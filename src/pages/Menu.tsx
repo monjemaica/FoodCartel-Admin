@@ -1,5 +1,5 @@
 import { TableComponent } from '../components/TableComponent'
-import { Avatar, Badge, Box, Button, Divider, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Avatar, Badge, Box, Button, Divider, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, Image, Center } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import { Pagination } from '../components/Pagination'
@@ -16,8 +16,7 @@ interface Props {
 }
 
 export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, currentPage, totalItems, pageSize }: Props) => {
-
-
+  console.log(foodData)
   return (
     <>
       <TableComponent header='Menu'>
@@ -27,6 +26,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
         </Box>
         <TableContainer>
           <Table variant='simple'>
+
             <Thead>
               <Tr>
                 <Th>ID</Th>
@@ -49,17 +49,26 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
                       {food.status ? 'Available' : 'Not Available'}
                     </Badge>
                   </Td>
-                  <Td onClick={(e)=>updateHandler(e, food)}><HiOutlineDotsHorizontal /></Td>
+                  <Td onClick={(e) => updateHandler(e, food)}><HiOutlineDotsHorizontal /></Td>
                 </Tr>
               )}
 
             </Tbody>
           </Table>
-          <Pagination
-            itemsCount={totalItems}
-            pgsize={pageSize}
-            currentPage={currentPage}
-            onChangePage={onPageChange} />
+
+          {foodData.length === 0 ?
+            <Center>
+              <Box boxSize='sm' >
+                <Image src='img/no-data.png' alt='Dan Abramov' />
+              </Box>
+            </Center>
+            :
+            <Pagination
+              itemsCount={totalItems}
+              pgsize={pageSize}
+              currentPage={currentPage}
+              onChangePage={onPageChange} />
+          }
         </TableContainer>
       </TableComponent>
     </>
