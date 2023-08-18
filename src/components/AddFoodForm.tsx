@@ -18,7 +18,7 @@ export const AddFoodForm = ({ foods, setFoods, onClose }: Props) => {
         name: '',
         price: '',
         stocks: '',
-        status: false
+        status: true
     })
 
     const [previewImg, setpreviewImg] = useState("");
@@ -63,7 +63,7 @@ export const AddFoodForm = ({ foods, setFoods, onClose }: Props) => {
                     <FormControl>
                         <Center>
                             <label htmlFor="fileInput">
-                                <Avatar size="xl" src={previewImg ? previewImg : `none`}>
+                                <Avatar size="xl" src={previewImg ? previewImg : `img/no-food.jpg`}>
                                     <AvatarBadge
                                         as={IconButton}
                                         size="sm"
@@ -108,17 +108,11 @@ export const AddFoodForm = ({ foods, setFoods, onClose }: Props) => {
                         <Input type='number' onChange={(e) => setFood({ ...food, stocks: e.target.value })} placeholder='e.g. 18' />
                     </InputGroup>
                     </FormControl>
-                    {/* <InputGroup>
-                        <InputLeftElement pointerEvents='none'>
-                            <Icon as={TbPhotoEdit} boxSize={5} color='gray.300' />
-                        </InputLeftElement>
-                        <Input type='file' onChange={uploadHandler} pt={1} />
-                    </InputGroup> */}
                     <FormControl display='flex' alignItems='center'>
                         <FormLabel htmlFor='email-alerts' mb='0'>
                             Enable item in store?
                         </FormLabel>
-                        <Switch id='email-alerts' onChange={(e) => setFood({ ...food, status: !food.status })} />
+                        <Switch id='email-alerts' onChange={() => setFood({ ...food, status: !food.status })} defaultChecked />
                     </FormControl>
                 </Stack>
             </FormControl>

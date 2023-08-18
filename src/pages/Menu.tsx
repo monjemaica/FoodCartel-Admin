@@ -54,7 +54,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
                 {foodData.map((food: any) =>
                   <Tr key={food._id}>
                     <Td>{food._id}</Td>
-                    <Td><Avatar src={`http://localhost:8080/${food?.img}`} size='lg' border='10px' borderColor={'green'}></Avatar></Td>
+                    <Td><Avatar src={food?.img ? `http://localhost:8080/${food?.img}` : 'img/no-food.jpg'} size='lg' border='10px' borderColor={'green'}></Avatar></Td>
                     <Td>{food.name}</Td>
                     <Td ><Text as='b'>₱{food.price.toFixed(2)}</Text></Td>
                     <Td>
