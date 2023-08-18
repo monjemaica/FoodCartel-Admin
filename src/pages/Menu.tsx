@@ -58,7 +58,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
                     <Td>{food.name}</Td>
                     <Td ><Text as='b'>₱{food.price.toFixed(2)}</Text></Td>
                     <Td>
-                      <Badge variant='solid' colorScheme={food.status ? 'green' : 'orange'} borderRadius={10} px={2} py={.5} fontWeight={500}>
+                      <Badge variant='subtle' colorScheme={food.status ? 'green' : 'orange'} borderRadius={10} px={2} py={.5} fontWeight={500}>
                         {food.status ? 'Available' : 'Not Available'}
                       </Badge>
                     </Td>
@@ -71,7 +71,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
             }
         
 
-          {/* {foodData?.length === 0 ?
+          {foodData?.length === 0 ?
             <Center>
               <Box boxSize='sm' >
                 <Image src='img/no-data.png' alt='Dan Abramov' />
@@ -83,7 +83,7 @@ export const Menu = ({ foodData, onAddHandler, updateHandler, onPageChange, curr
               pgsize={pageSize}
               currentPage={currentPage}
               onChangePage={onPageChange} />
-          } */}
+          }
         </TableContainer>
       </TableComponent>
     </>

@@ -6,7 +6,6 @@ import { MdRestaurantMenu } from 'react-icons/md';
 import { IconType } from 'react-icons'
 import { useAuth } from '../hooks/useAuth';
 import useUsers from '../hooks/useUser';
-import { User } from '../service/userService';
 
 interface LinkItemProps {
     name: string

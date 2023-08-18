@@ -13,12 +13,12 @@ interface Address{
     city: string
 }
 
-export interface User<T>{
+export interface User{
     _id: string
     email: string
     username: string
     contact: string
-    role: Array<T>
+    role: []
     address: Address
     authentication: Auth
     isDeleted: Boolean
