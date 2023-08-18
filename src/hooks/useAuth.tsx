@@ -25,15 +25,14 @@ export const UserProvider = ({ children }: UserAdmin) => {
 
     const login = (admin: Props) => {
         authService.create(admin).then((res) => {
-            setCookies('COOKI3AUTH', res.data.data.authentication.sessionToken);
             localStorage.setItem('USERDATA', JSON.stringify(res.data.data));
-            navigate("/");
+            navigate("/home");
         })
             .catch(err => console.log(err.response.data));
     };
 
     const logout = () => {
-        ['COOKI3AUTH', 'USERDATA'].forEach(obj => removeCookie(obj));
+        ['COOKI3-AUTH', 'USERDATA'].forEach(obj => removeCookie(obj));
         navigate('/login');
     };
 

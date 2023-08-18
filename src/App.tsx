@@ -51,7 +51,7 @@ function App() {
         {/* <Route element={<PrivateRoute onLogggedIn={isLoggedIn}/>}> */}
         <Route element={<PrivateRoute />}>
           <Route element={<SidebarMenu />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/menu" element={<Menu foodData={foodData} onAddHandler={addHandler} updateHandler={updateHandler} onPageChange={handleOnChange} currentPage={currentPage} totalItems={foods.length} pageSize={pageSize}/>} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/reservations" element={<Reservations />} />

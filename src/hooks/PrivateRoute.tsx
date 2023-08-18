@@ -3,7 +3,8 @@ import { useAuth } from './useAuth';
 
 export const PrivateRoute = () => {
   const { cookies } = useAuth();
+  // console.log('test',cookies);
   return (
-    cookies.COOKI3AUTH ? <Outlet /> : <Navigate to = '/login' /> 
+    cookies["COOKI3-AUTH"] ? <Outlet /> : <Navigate to = '/login' /> 
   )
 }
